@@ -1,59 +1,33 @@
 package ru.vsu.cs.aisd2023.g112.ereshkin_a_v.task03.model;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
-public class ChessFieldState {
+public class FieldState {
 	private int[][] field;
 	private final int size;
 	private boolean won = false;
 
-	public ChessFieldState(int[][] field) {
+	public FieldState(int[][] field) {
 		this.size = field.length;
 		this.field = field;
-		won = setWon();
+		won = calculateHaveWon();
 	}
-	public List<ChessFieldState> getRotatedStatesIncludingSelf(){
-		List<ChessFieldState> result = new ArrayList<>();
-		ChessFieldState rotatedZero = new ChessFieldState(this.getField());
-		ChessFieldState rotatedNinety = new ChessFieldState(getRotatedClockwise(rotatedZero.getField()));
-		ChessFieldState rotatedOneEighty = new ChessFieldState(getRotatedClockwise(rotatedNinety.getField()));
-		ChessFieldState rotatedTwoSeventy = new ChessFieldState(getRotatedClockwise(rotatedOneEighty.getField()));
-		result.add(rotatedZero);
-		result.add(rotatedNinety);
-		result.add(rotatedOneEighty);
-		result.add(rotatedTwoSeventy);
-		return result;
+
+	public FieldState(int size){
+		this.size = size;
+		this.field = new int[size][size];
 	}
-	private int[][] getRotatedClockwise(int[][] field){
-		int side = field.length;
-		int[][] result = new int [side][side];
-		for (int i = 0; i < side; i++) {
-			for (int j = 0; j < side; j++) {
-				result[i][j] = field[side - j - 1][i];
-			}
-		}
-		return result;
-	}
-	private boolean setWon() {
+	private boolean calculateHaveWon() {
 		int queens = 0;
 		for (int[] row : field) {
 			for (int element : row) {
 				if (element == -1) {
 					queens++;
 				}
-				if (queens == 8) return true;
 			}
 		}
-		return false;
+		return queens == size;
 	}
-
-	public ChessFieldState(int size){
-		this.size = size;
-		this.field = new int[size][size];
-	}
-
 	public void setValue(int row, int column, int value){
 		field[row][column] = value;
 	}
@@ -73,7 +47,7 @@ public class ChessFieldState {
 		return size;
 	}
 	public void empty(){
-		field = new int[8][8];
+		field = new int[size][size];
 	}
 	public boolean haveWon(){
 		return won;
@@ -93,13 +67,12 @@ public class ChessFieldState {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 
-		ChessFieldState state = (ChessFieldState) o;
+		FieldState state = (FieldState) o;
 
 		if (size != state.size) return false;
 		if (won != state.won) return false;
 		return Arrays.deepEquals(field, state.field);
 	}
-
 	@Override
 	public int hashCode() {
 		return Arrays.deepHashCode(field);
