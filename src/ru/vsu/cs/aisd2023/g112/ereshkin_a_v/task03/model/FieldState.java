@@ -1,65 +1,72 @@
 package ru.vsu.cs.aisd2023.g112.ereshkin_a_v.task03.model;
 
-import java.util.*;
+import ru.vsu.cs.aisd2023.g112.ereshkin_a_v.task03.stack.IntStack;
 
 public class FieldState {
-	private int[][] field;
 	private final int size;
-	private boolean won = false;
+	private final int[] stackArray;
+	private final int currentColumn;
 
-	public FieldState(int[][] field) {
-		this.size = field.length;
-		this.field = field;
-		won = calculateHaveWon();
-	}
-
-	public FieldState(int size){
+	public FieldState(IntStack stack, int currentColumn, int size) {
 		this.size = size;
-		this.field = new int[size][size];
+		this.stackArray = stack.toArray();
+		this.currentColumn = currentColumn;
 	}
-	private boolean calculateHaveWon() {
-		int queens = 0;
-		for (int[] row : field) {
-			for (int element : row) {
-				if (element == -1) {
-					queens++;
-				}
+
+	public int[][] getField() {
+		int[][] resultMatrix = new int[size][size];
+		for (int i = 0; i < stackArray.length; i++) {
+			int col = stackArray[i];
+			for (int j = 0; j < stackArray.length; j++) {
+				resultMatrix[j][i] = j == col ? 1 : 0;
 			}
 		}
-		return queens == size;
+		return resultMatrix;
 	}
-	public void setValue(int row, int column, int value){
-		field[row][column] = value;
-	}
-	public void incrementValue(int row, int column){
-		field[row][column]++;
-	}
-	public void decrementValue(int row, int column){
-		field[row][column]--;
-	}
-	public int getValue(int row, int column) {
-		return field[row][column];
-	}
-	public int[][] getField(){
-		return copy(field);
-	}
-	public int getSize(){
-		return size;
-	}
-	public void empty(){
-		field = new int[size][size];
-	}
-	public boolean haveWon(){
-		return won;
-	}
-	private int[][] copy(int[][] matrix) {
-		int size = matrix.length;
-		int[][] matrixCopy = new int[size][size];
-		for (int i = 0; i < size; i++)  {
-			int[] array = matrix[i];
-			System.arraycopy(array, 0, matrixCopy[i], 0, size);
+	public static int[][] getField(IntStack stack, int size){
+		int[] stackArray = stack.toArray();
+		int[][] resultMatrix = new int[stack.size()][stack.size()];
+		for (int i = 0; i < size; i++) {
+			int col = stackArray[i];
+			for (int j = 0; j < size; j++) {
+				resultMatrix[j][i] = j == col ? 1 : 0;
+			}
 		}
-		return matrixCopy;
+		return resultMatrix;
+	}
+
+	private boolean isValid(int[] stack, int currentColumn) {
+		if (stack.length == 0) {
+			return true;
+		}
+		int[][] matrix = new int[size][size];
+		int[] colsArray = stack;
+		int positionRow = size - stack.length - 1;
+		for (int i = 0; i < stack.length; i++) { // row is i, col is stack.pop()
+			if (colsArray[i] == currentColumn) {
+				return false;
+			}
+		}
+		for (int i = 0, row = size - stack.length; i < stack.length; i++, row++) {
+			matrix[row][colsArray[i]] = 1;
+		}
+		// Побочная диагональ
+		for (int i = currentColumn - 1, j = positionRow + 1; i >= 0 && j < size; i--, j++) {
+			if (matrix[j][i] == 1) {
+				return false;
+			}
+		}
+		// Главная диагональ
+		for (int i = currentColumn + 1, j = positionRow + 1; i < size && j < size; i++, j++) {
+			if (matrix[j][i] == 1) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	public boolean haveWon(){
+		return isValid(stackArray, currentColumn);
 	}
 
 	@Override
@@ -70,11 +77,7 @@ public class FieldState {
 		FieldState state = (FieldState) o;
 
 		if (size != state.size) return false;
-		if (won != state.won) return false;
-		return Arrays.deepEquals(field, state.field);
-	}
-	@Override
-	public int hashCode() {
-		return Arrays.deepHashCode(field);
+		boolean haveWon = haveWon();
+		return haveWon == state.haveWon();
 	}
 }

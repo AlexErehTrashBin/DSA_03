@@ -26,7 +26,7 @@
           </component>
         </children>
       </scrollpane>
-      <grid id="f314c" layout-manager="GridLayoutManager" row-count="4" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+      <grid id="f314c" layout-manager="GridLayoutManager" row-count="3" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
         <margin top="0" left="0" bottom="0" right="0"/>
         <constraints>
           <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
@@ -36,15 +36,15 @@
         <children>
           <component id="627ba" class="javax.swing.JButton" binding="nextButton" default-binding="true">
             <constraints>
-              <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="След. промеж. позиция"/>
+              <text value="След. позиция-решение"/>
             </properties>
           </component>
           <component id="2ab71" class="javax.swing.JButton" binding="startButton">
             <constraints>
-              <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+              <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
               <text value="Начать автовизуализацию"/>
@@ -52,34 +52,18 @@
           </component>
           <component id="af4b1" class="javax.swing.JButton" binding="prevButton">
             <constraints>
-              <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties>
-              <text value="Пред. промеж. позиция"/>
-            </properties>
-          </component>
-          <component id="61749" class="javax.swing.JButton" binding="stopButton" default-binding="true">
-            <constraints>
-              <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties>
-              <text value="Остановить автовизуализацию"/>
-            </properties>
-          </component>
-          <component id="fcb87" class="javax.swing.JButton" binding="nextSolutionButton">
-            <constraints>
-              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties>
-              <text value="След. позиция-решение"/>
-            </properties>
-          </component>
-          <component id="7fb3e" class="javax.swing.JButton" binding="prevSolutionButton">
-            <constraints>
               <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
               <text value="Пред. позиция-решение"/>
+            </properties>
+          </component>
+          <component id="61749" class="javax.swing.JButton" binding="stopButton" default-binding="true">
+            <constraints>
+              <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value="Остановить автовизуализацию"/>
             </properties>
           </component>
           <component id="54141" class="javax.swing.JButton" binding="setQueenButton" default-binding="true">

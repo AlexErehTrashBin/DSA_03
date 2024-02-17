@@ -12,7 +12,7 @@ import static ru.vsu.cs.aisd2023.g112.ereshkin_a_v.task03.cli.CLIUtils.*;
 public class Program {
 
 	public static void winMain() {
-		SwingUtils.setLookAndFeelByName("Windows");
+		//SwingUtils.setLookAndFeelByName("Windows");
 		Locale.setDefault(Locale.ROOT);
 
 		SwingUtils.setDefaultFont("Microsoft Sans Serif", 18);
@@ -22,11 +22,11 @@ public class Program {
 
 	public static void main(String[] args) {
 		InputArgs params = parseCmdArgs(args);
+		//SolveTaskCLI.solve();
 		if (params.window) {
 			winMain();
 		}
-		if (params.runIndividualFileCheck) {
-			/// Не работает (пока или вообще)
+		else if (params.runIndividualFileCheck) {
 			SolveTaskCLI.solve();
 		}
 	}

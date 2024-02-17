@@ -6,7 +6,6 @@ import java.util.List;
 public class FieldStatesIterator implements Iterator<FieldState> {
 	private final List<FieldState> sourceList;
 	private int index = 0;
-	private int correctIndex = -1;
 
 	public FieldStatesIterator(List<FieldState> sourceList) {
 		this.sourceList = sourceList;
@@ -25,42 +24,6 @@ public class FieldStatesIterator implements Iterator<FieldState> {
 		return index - 1 >= 0;
 	}
 
-	public boolean hasNextCorrect() {
-		if (!hasNext()) return false;
-		int i = getWinStateOnRightIndex(index + 1);
-		boolean exists = i != -1;
-		if (exists) {
-			correctIndex = i;
-		}
-		return exists;
-	}
-
-	public boolean hasPreviousCorrect() {
-		if (!hasPrevious()) return false;
-		int i = getWinStateOnLeftIndex();
-		boolean exists = i != -1;
-		if (exists) {
-			correctIndex = i;
-		}
-		return exists;
-	}
-
-	private int getWinStateOnLeftIndex() {
-		for (int i = index - 1; i >= 0; i--) {
-			FieldState currentState = sourceList.get(i);
-			if (currentState.haveWon()) return i;
-		}
-		return -1;
-	}
-
-	private int getWinStateOnRightIndex(int startIndex) {
-		for (int i = startIndex; i < sourceList.size(); i++) {
-			FieldState currentState = sourceList.get(i);
-			if (currentState.haveWon()) return i;
-		}
-		return -1;
-	}
-
 	@Override
 	public FieldState next() {
 		index++;
@@ -69,18 +32,6 @@ public class FieldStatesIterator implements Iterator<FieldState> {
 
 	public FieldState previous() {
 		index--;
-		return sourceList.get(index);
-	}
-
-	public FieldState nextCorrect() {
-		index = correctIndex;
-		correctIndex = -1;
-		return sourceList.get(index);
-	}
-
-	public FieldState previousCorrect() {
-		index = correctIndex;
-		correctIndex = -1;
 		return sourceList.get(index);
 	}
 }
